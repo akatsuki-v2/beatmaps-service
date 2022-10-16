@@ -3,7 +3,7 @@ CREATE TABLE beatmaps (
     md5_hash CHAR(32) NOT NULL UNIQUE,
     set_id INT NOT NULL,
     mode INT NOT NULL,
-    convert TINYINT(1) NOT NULL,
+    `convert` TINYINT(1) NOT NULL,
     od SMALLINT NOT NULL,
     ar SMALLINT NOT NULL,
     cs SMALLINT NOT NULL,
