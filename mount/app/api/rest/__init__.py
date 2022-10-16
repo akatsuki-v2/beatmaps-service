@@ -5,6 +5,7 @@ import time
 from app.common import logging
 from app.common import settings
 from app.services import database
+from app.services import osu_api
 from app.services import redis
 from fastapi import FastAPI
 from fastapi import Request
@@ -67,6 +68,30 @@ def init_redis(api: FastAPI) -> None:
         logging.info("Redis pool shut down")
 
 
+def init_osu_api_client(api: FastAPI) -> None:
+    @api.on_event("startup")
+    async def startup_osu_api_client() -> None:
+        logging.info("Starting up osu!api client")
+        osu_api_client = osu_api.OsuAPIClient(
+            client_id=settings.OSU_API_CLIENT_ID,
+            client_secret=settings.OSU_API_CLIENT_SECRET,
+            scope=settings.OSU_API_SCOPE,
+            username=settings.OSU_API_USERNAME,
+            password=settings.OSU_API_PASSWORD,
+            request_interval=settings.OSU_API_REQUEST_INTERVAL,
+            max_requests_per_minute=settings.OSU_API_MAX_REQUESTS_PER_MINUTE,
+        )
+        api.state.osu_api_client = osu_api_client
+        logging.info("osu!api client started up")
+
+    @api.on_event("shutdown")
+    async def shutdown_osu_api_client() -> None:
+        logging.info("Shutting down osu!api client")
+        await api.state.osu_api_client.close()
+        del api.state.osu_api_client
+        logging.info("osu!api client shut down")
+
+
 def init_middlewares(api: FastAPI) -> None:
     # NOTE: these run bottom to top
 
@@ -80,6 +105,12 @@ def init_middlewares(api: FastAPI) -> None:
     @api.middleware("http")
     async def add_redis_to_request(request: Request, call_next):
         request.state.redis = request.app.state.redis
+        response = await call_next(request)
+        return response
+
+    @api.middleware("http")
+    async def add_osu_api_client_to_request(request: Request, call_next):
+        request.state.osu_api_client = request.app.state.osu_api_client
         response = await call_next(request)
         return response
 
@@ -103,6 +134,7 @@ def init_api():
 
     init_db(api)
     init_redis(api)
+    init_osu_api_client(api)
     init_middlewares(api)
     init_routes(api)
 

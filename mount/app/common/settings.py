@@ -42,5 +42,15 @@ AMQP_PORT = int(os.environ["AMQP_PORT"])
 AMQP_USER = os.environ["AMQP_USER"]
 AMQP_PASS = os.environ["AMQP_PASS"]
 
-# misc
+# pagination
 DEFAULT_PAGE_SIZE = int(os.environ["DEFAULT_PAGE_SIZE"])
+
+# osu! api connection
+OSU_API_CLIENT_ID = int(os.environ["OSU_API_CLIENT_ID"])
+OSU_API_CLIENT_SECRET = os.environ["OSU_API_CLIENT_SECRET"]
+OSU_API_SCOPE = os.environ["OSU_API_SCOPE"]
+OSU_API_USERNAME = os.environ["OSU_API_USERNAME"]
+OSU_API_PASSWORD = os.environ["OSU_API_PASSWORD"]
+OSU_API_REQUEST_INTERVAL = float(os.environ["OSU_API_REQUEST_INTERVAL"])
+OSU_API_MAX_REQUESTS_PER_MINUTE = int(
+    os.environ["OSU_API_MAX_REQUESTS_PER_MINUTE"])
