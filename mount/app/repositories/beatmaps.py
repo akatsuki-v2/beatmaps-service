@@ -4,17 +4,6 @@ from typing import Mapping
 
 from app.common import settings
 from app.common.context import Context
-from app.models import Status
-
-
-class RankedStatus(IntEnum):
-    GRAVEYARD = -2
-    WORK_IN_PROGRESS = -1
-    PENDING = 0
-    RANKED = 1
-    APPROVED = 2
-    QUALIFIED = 3
-    LOVED = 4
 
 
 class BeatmapsRepo:
