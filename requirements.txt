@@ -2,6 +2,7 @@ aiomysql
 aioredis
 databases==0.5.5
 fastapi[all]
+httpx
 pytest
 pytest-asyncio
 pytest-cov
