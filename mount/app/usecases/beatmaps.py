@@ -83,6 +83,7 @@ async def fetch_one(ctx: Context, beatmap_id: int
 
 
 async def fetch_many(ctx: Context, set_id: int | None = None,
+                     md5_hash: str | None = None,
                      mode: str | None = None,
                      ranked_status: int | None = None,
                      status: str | None = None,
@@ -92,6 +93,7 @@ async def fetch_many(ctx: Context, set_id: int | None = None,
     repo = BeatmapsRepo(ctx)
 
     beatmaps = await repo.fetch_many(set_id=set_id,
+                                     md5_hash=md5_hash,
                                      mode=mode,
                                      ranked_status=ranked_status,
                                      status=status,

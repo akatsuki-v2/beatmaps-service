@@ -58,6 +58,7 @@ async def fetch_one(beatmap_id: int, ctx: RequestContext = Depends()):
 
 @router.get("/v1/beatmaps", response_model=Success[list[Beatmap]])
 async def fetch_many(set_id: int | None = None,
+                     md5_hash: str | None = None,
                      mode: Literal['osu', 'taiko',
                                    'fruits', 'mania'] | None = None,
                      ranked_status: int | None = None,
@@ -66,6 +67,7 @@ async def fetch_many(set_id: int | None = None,
                      page_size: int = settings.DEFAULT_PAGE_SIZE,
                      ctx: RequestContext = Depends()):
     data = await beatmaps.fetch_many(ctx, set_id=set_id,
+                                     md5_hash=md5_hash,
                                      mode=mode,
                                      ranked_status=ranked_status,
                                      status=status,

@@ -90,6 +90,7 @@ class BeatmapsRepo:
         return beatmap
 
     async def fetch_many(self, set_id: int | None = None,
+                         md5_hash: str | None = None,
                          mode: str | None = None,
                          ranked_status: int | None = None,
                          status: str | None = None,
@@ -100,6 +101,7 @@ class BeatmapsRepo:
             SELECT {self.READ_PARAMS}
               FROM beatmaps
              WHERE set_id = COALESCE(:set_id, set_id)
+               AND md5_hash = COALESCE(:md5_hash, md5_hash)
                AND mode = COALESCE(:mode, mode)
                AND ranked_status = COALESCE(:ranked_status, ranked_status)
                AND status = COALESCE(:status, status)
@@ -108,6 +110,7 @@ class BeatmapsRepo:
         """
         params = {
             "set_id": set_id,
+            "md5_hash": md5_hash,
             "mode": mode,
             "ranked_status": ranked_status,
             "status": status,
