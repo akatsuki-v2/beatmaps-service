@@ -173,7 +173,7 @@ class OsuAPIClient:
         params = {"ids[]": [str(id) for id in ids]}
         return (await self.request("GET", url, params))["beatmaps"]
 
-    async def get_beatmap_osz2(self, id: int) -> bytes:
+    async def get_beatmap_osz(self, id: int) -> bytes:
         """Fetch a beatmapset's osu! file from it's id."""
         url = f"https://osu.ppy.sh/api/v2/beatmapsets/{id}/download"
         headers = {"User-Agent": "osu-framework"}
