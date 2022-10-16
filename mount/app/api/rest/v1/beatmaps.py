@@ -82,7 +82,7 @@ async def fetch_many(set_id: int | None = None,
 
 
 @router.delete("/v1/beatmaps/{beatmap_id}", response_model=Success[Beatmap])
-async def delete_beatmap(beatmap_id: int, ctx: RequestContext = Depends()):
+async def delete(beatmap_id: int, ctx: RequestContext = Depends()):
     data = await beatmaps.delete(ctx, beatmap_id=beatmap_id)
     if isinstance(data, ServiceError):
         return responses.failure(data, "Failed to delete beatmap")
