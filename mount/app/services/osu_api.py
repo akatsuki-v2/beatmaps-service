@@ -16,6 +16,10 @@ class OsuAPIRequestError(Exception):
         self.message = message
         self.status_code = status_code
 
+    def __repr__(self) -> str:
+        return self.__class__.__name__ + \
+            f"(message={self.message!r}, status_code={self.status_code!r})"
+
 
 class OsuAPIClient:
     def __init__(
