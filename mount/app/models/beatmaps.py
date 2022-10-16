@@ -1,4 +1,6 @@
+from datetime import datetime
 from enum import IntEnum
+from typing import Literal
 
 from app.models import BaseModel
 
@@ -18,7 +20,7 @@ class BeatmapInput(BaseModel):
     md5_hash: str
     set_id: int
     convert: bool
-    mode: int
+    mode: Literal['osu', 'taiko', 'fruits', 'mania']
     od: float
     ar: float
     cs: float
@@ -34,10 +36,9 @@ class BeatmapInput(BaseModel):
     pass_count: int
     play_count: int
     version: str
-    created_by: str
+    created_by: int
     ranked_status: int
-    status: int
-    deleted_at: str
+    status: str
 
 
 class Beatmap(BaseModel):
@@ -45,7 +46,7 @@ class Beatmap(BaseModel):
     md5_hash: str
     set_id: int
     convert: bool
-    mode: int
+    mode: Literal['osu', 'taiko', 'fruits', 'mania']
     od: float
     ar: float
     cs: float
@@ -61,12 +62,11 @@ class Beatmap(BaseModel):
     pass_count: int
     play_count: int
     version: str
-    created_by: str
+    created_by: int
     ranked_status: int
-    status: int
-    created_at: str
-    updated_at: str
-    deleted_at: str
+    status: str
+    created_at: datetime
+    updated_at: datetime
 
 
 # TODO: think more about whether we want our initial impl to support custom maps

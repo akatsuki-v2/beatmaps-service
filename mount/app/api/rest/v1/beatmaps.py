@@ -1,3 +1,5 @@
+from typing import Literal
+
 from app.api.rest.context import RequestContext
 from app.common import responses
 from app.common import settings
@@ -36,8 +38,7 @@ async def create(args: BeatmapInput, ctx: RequestContext = Depends()):
                                  version=args.version,
                                  created_by=args.created_by,
                                  ranked_status=args.ranked_status,
-                                 status=args.status,
-                                 deleted_at=args.deleted_at)
+                                 status=args.status)
     if isinstance(data, ServiceError):
         return responses.failure(data, "Failed to create beatmap")
 
@@ -57,9 +58,10 @@ async def fetch_one(beatmap_id: int, ctx: RequestContext = Depends()):
 
 @router.get("/v1/beatmaps", response_model=Success[list[Beatmap]])
 async def fetch_many(set_id: int | None = None,
-                     mode: int | None = None,
+                     mode: Literal['osu', 'taiko',
+                                   'fruits', 'mania'] | None = None,
                      ranked_status: int | None = None,
-                     status: int | None = None,
+                     status: str | None = None,
                      page: int = 1,
                      page_size: int = settings.DEFAULT_PAGE_SIZE,
                      ctx: RequestContext = Depends()):

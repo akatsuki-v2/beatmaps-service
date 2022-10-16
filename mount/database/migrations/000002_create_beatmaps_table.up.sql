@@ -2,7 +2,7 @@ CREATE TABLE beatmaps (
     beatmap_id INT NOT NULL PRIMARY KEY,
     md5_hash CHAR(32) NOT NULL UNIQUE,
     set_id INT NOT NULL,
-    mode INT NOT NULL,
+    mode VARCHAR(16) NOT NULL,
     `convert` TINYINT(1) NOT NULL,
     od SMALLINT NOT NULL,
     ar SMALLINT NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE beatmaps (
     version VARCHAR(255),
     created_by INT NOT NULL,
     ranked_status INT NOT NULL,
-    status INT NOT NULL,
+    status VARCHAR(16) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT NOW(),
     updated_at DATETIME NOT NULL DEFAULT NOW()
 );

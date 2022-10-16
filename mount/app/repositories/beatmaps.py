@@ -22,24 +22,25 @@ class BeatmapsRepo:
         self.ctx = ctx
 
     async def create(self, beatmap_id: int, md5_hash: str, set_id: int,
-                     convert: bool, mode: int, od: float, ar: float, cs: float,
+                     convert: bool, mode: str, od: float, ar: float, cs: float,
                      hp: float, bpm: float, hit_length: int, total_length: int,
                      count_circles: int, count_sliders: int, count_spinners: int,
                      difficulty_rating: float, is_scoreable: bool, pass_count: int,
-                     play_count: int, version: str, created_by: str,
-                     ranked_status: int, status: int, deleted_at: str) -> Mapping[str, Any] | None:
+                     play_count: int, version: str, created_by: int,
+                     ranked_status: int, status: str,
+                     ) -> Mapping[str, Any] | None:
         query = """\
             INSERT INTO beatmaps (
                 beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp,
                 bpm, hit_length, total_length, count_circles, count_sliders,
                 count_spinners, difficulty_rating, is_scoreable, pass_count,
-                play_count, version, created_by, ranked_status, status, deleted_at
+                play_count, version, created_by, ranked_status, status
             ) VALUES (
                 :beatmap_id, :md5_hash, :set_id, :mode, :convert, :od, :ar,
                 :cs, :hp, :bpm, :hit_length, :total_length, :count_circles,
                 :count_sliders, :count_spinners, :difficulty_rating,
                 :is_scoreable, :pass_count, :play_count, :version, :created_by,
-                :ranked_status, :status, :deleted_at
+                :ranked_status, :status
             )
         """
         params = {
@@ -66,7 +67,6 @@ class BeatmapsRepo:
             "created_by": created_by,
             "ranked_status": ranked_status,
             "status": status,
-            "deleted_at": deleted_at,
         }
         await self.ctx.db.execute(query, params)
 
@@ -90,9 +90,9 @@ class BeatmapsRepo:
         return beatmap
 
     async def fetch_many(self, set_id: int | None = None,
-                         mode: int | None = None,
+                         mode: str | None = None,
                          ranked_status: int | None = None,
-                         status: int | None = None,
+                         status: str | None = None,
                          page: int = 1,
                          page_size: int = settings.DEFAULT_PAGE_SIZE,
                          ) -> list[Mapping[str, Any]]:
@@ -122,11 +122,11 @@ class BeatmapsRepo:
     async def partial_update(self, beatmap_id: int, **kwargs: Any
                              ) -> Mapping[str, Any] | None:
         # TODO: use null coalescence to update fields
-        query = """\
+        query = f"""\
             UPDATE beatmaps
-               SET {}
+               SET {", ".join(f"{k} = :{k}" for k in kwargs)}
              WHERE beatmap_id = :beatmap_id
-        """.format(", ".join(f"{k} = :{k}" for k in kwargs))
+        """
         params = {"beatmap_id": beatmap_id, **kwargs}
         await self.ctx.db.execute(query, params)
 
