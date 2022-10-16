@@ -12,7 +12,7 @@ class BeatmapsRepo:
     # TODO: how should we store osu created/updated/deleted timestamps vs. ours?
     #       combine?
     READ_PARAMS = """\
-        beatmap_id, md5_hash, set_id, mode, convert, od, ar, cs, hp, bpm,
+        beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp, bpm,
         hit_length, total_length, count_circles, count_sliders, count_spinners,
         difficulty_rating, is_scorable, pass_count, play_count,
         version, created_by, ranked_status, status, created_at, updated_at
@@ -31,7 +31,7 @@ class BeatmapsRepo:
                      updated_at: str, deleted_at: str) -> Mapping[str, Any] | None:
         query = """\
             INSERT INTO beatmaps (
-                beatmap_id, md5_hash, set_id, mode, convert, od, ar, cs, hp,
+                beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp,
                 bpm, hit_length, total_length, count_circles, count_sliders,
                 count_spinners, difficulty_rating, is_scorable, pass_count,
                 play_count, version, created_by, ranked_status, status, created_at,
