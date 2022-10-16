@@ -15,7 +15,7 @@ async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
                  count_circles: int, count_sliders: int, count_spinners: int,
                  difficulty_rating: float, is_scorable: bool, pass_count: int,
                  play_count: int, version: str, created_by: str,
-                 ranked_status: RankedStatus, status: Status, created_at: str,
+                 ranked_status: int, status: int, created_at: str,
                  updated_at: str, deleted_at: str
                  ) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsRepo(ctx)
@@ -40,7 +40,8 @@ async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
     return beatmap
 
 
-async def fetch_one(ctx: Context, beatmap_id: int) -> Mapping[str, Any] | ServiceError:
+async def fetch_one(ctx: Context, beatmap_id: int
+                    ) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsRepo(ctx)
 
     beatmap = await repo.fetch_one(beatmap_id=beatmap_id)
@@ -52,8 +53,8 @@ async def fetch_one(ctx: Context, beatmap_id: int) -> Mapping[str, Any] | Servic
 
 async def fetch_many(ctx: Context, set_id: int | None = None,
                      mode: int | None = None,
-                     ranked_status: RankedStatus | None = None,
-                     status: Status | None = None,
+                     ranked_status: int | None = None,
+                     status: int | None = None,
                      page: int = 1,
                      page_size: int = settings.DEFAULT_PAGE_SIZE,
                      ) -> list[Mapping[str, Any]]:
@@ -69,7 +70,8 @@ async def fetch_many(ctx: Context, set_id: int | None = None,
     return beatmaps
 
 
-async def delete(ctx: Context, beatmap_id: int) -> Mapping[str, Any] | ServiceError:
+async def delete(ctx: Context, beatmap_id: int
+                 ) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsRepo(ctx)
 
     beatmap = await repo.delete(beatmap_id=beatmap_id)

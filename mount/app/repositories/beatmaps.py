@@ -38,7 +38,8 @@ class BeatmapsRepo:
                      count_circles: int, count_sliders: int, count_spinners: int,
                      difficulty_rating: float, is_scorable: bool, pass_count: int,
                      play_count: int, version: str, created_by: str,
-                     ranked_status: RankedStatus, status: Status, created_at: str, updated_at: str, deleted_at: str) -> Mapping[str, Any] | None:
+                     ranked_status: int, status: int, created_at: str,
+                     updated_at: str, deleted_at: str) -> Mapping[str, Any] | None:
         query = """\
             INSERT INTO beatmaps (
                 beatmap_id, md5_hash, set_id, mode, convert, od, ar, cs, hp,
@@ -105,8 +106,8 @@ class BeatmapsRepo:
 
     async def fetch_many(self, set_id: int | None = None,
                          mode: int | None = None,
-                         ranked_status: RankedStatus | None = None,
-                         status: Status | None = None,
+                         ranked_status: int | None = None,
+                         status: int | None = None,
                          page: int = 1,
                          page_size: int = settings.DEFAULT_PAGE_SIZE,
                          ) -> list[Mapping[str, Any]]:
