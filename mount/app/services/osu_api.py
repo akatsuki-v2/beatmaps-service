@@ -137,15 +137,15 @@ class OsuAPIClient:
 
         if response.status_code != 200:
             raise OsuAPIRequestError(
-                "Request returned non-200 status code",
-                response.status_code,
+                message="Request returned non-200 status code",
+                status_code=response.status_code,
             )
 
         content_type = response.headers.get("content-type", "")
         if content_type is None:
             raise OsuAPIRequestError(
-                "No content-type header found in response.",
-                response.status_code,
+                message="No content-type header found in response.",
+                status_code=response.status_code,
             )
 
         if content_type == "application/json":
