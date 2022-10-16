@@ -1,5 +1,6 @@
 from enum import IntEnum
-from typing import Any, Mapping
+from typing import Any
+from typing import Mapping
 
 from app.common import settings
 from app.common.context import Context

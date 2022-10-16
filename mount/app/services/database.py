@@ -6,7 +6,8 @@ from typing import Mapping
 from typing import Type
 
 from databases import Database
-from databases.core import Transaction, Connection
+from databases.core import Connection
+from databases.core import Transaction
 
 
 def _create_pool(dsn: str, min_pool_size: int, max_pool_size: int, ssl: bool) -> Database:

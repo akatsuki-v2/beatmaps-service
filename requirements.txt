@@ -1,5 +1,5 @@
-aioredis
 aiomysql
+aioredis
 databases==0.5.5
 fastapi[all]
 pytest
