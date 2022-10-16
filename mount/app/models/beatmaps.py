@@ -30,15 +30,13 @@ class BeatmapInput(BaseModel):
     count_sliders: int
     count_spinners: int
     difficulty_rating: float
-    is_scorable: bool
+    is_scoreable: bool
     pass_count: int
     play_count: int
     version: str
     created_by: str
     ranked_status: int
     status: int
-    created_at: str
-    updated_at: str
     deleted_at: str
 
 
@@ -59,7 +57,7 @@ class Beatmap(BaseModel):
     count_sliders: int
     count_spinners: int
     difficulty_rating: float
-    is_scorable: bool
+    is_scoreable: bool
     pass_count: int
     play_count: int
     version: str

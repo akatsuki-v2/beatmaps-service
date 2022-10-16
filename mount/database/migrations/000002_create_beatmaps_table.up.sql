@@ -15,7 +15,7 @@ CREATE TABLE beatmaps (
     count_sliders INT NOT NULL,
     count_spinners INT NOT NULL,
     difficulty_rating FLOAT(6, 3) NOT NULL,
-    is_scorable TINYINT(1) NOT NULL,
+    is_scoreable TINYINT(1) NOT NULL,
     pass_count INT NOT NULL,
     play_count INT NOT NULL,
     version VARCHAR(255),

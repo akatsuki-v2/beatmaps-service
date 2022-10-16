@@ -30,15 +30,13 @@ async def create(args: BeatmapInput, ctx: RequestContext = Depends()):
                                  count_sliders=args.count_sliders,
                                  count_spinners=args.count_spinners,
                                  difficulty_rating=args.difficulty_rating,
-                                 is_scorable=args.is_scorable,
+                                 is_scoreable=args.is_scoreable,
                                  pass_count=args.pass_count,
                                  play_count=args.play_count,
                                  version=args.version,
                                  created_by=args.created_by,
                                  ranked_status=args.ranked_status,
                                  status=args.status,
-                                 created_at=args.created_at,
-                                 updated_at=args.updated_at,
                                  deleted_at=args.deleted_at)
     if isinstance(data, ServiceError):
         return responses.failure(data, "Failed to create beatmap")

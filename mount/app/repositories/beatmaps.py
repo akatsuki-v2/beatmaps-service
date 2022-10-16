@@ -14,7 +14,7 @@ class BeatmapsRepo:
     READ_PARAMS = """\
         beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp, bpm,
         hit_length, total_length, count_circles, count_sliders, count_spinners,
-        difficulty_rating, is_scorable, pass_count, play_count,
+        difficulty_rating, is_scoreable, pass_count, play_count,
         version, created_by, ranked_status, status, created_at, updated_at
     """
 
@@ -25,23 +25,21 @@ class BeatmapsRepo:
                      convert: bool, mode: int, od: float, ar: float, cs: float,
                      hp: float, bpm: float, hit_length: int, total_length: int,
                      count_circles: int, count_sliders: int, count_spinners: int,
-                     difficulty_rating: float, is_scorable: bool, pass_count: int,
+                     difficulty_rating: float, is_scoreable: bool, pass_count: int,
                      play_count: int, version: str, created_by: str,
-                     ranked_status: int, status: int, created_at: str,
-                     updated_at: str, deleted_at: str) -> Mapping[str, Any] | None:
+                     ranked_status: int, status: int, deleted_at: str) -> Mapping[str, Any] | None:
         query = """\
             INSERT INTO beatmaps (
                 beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp,
                 bpm, hit_length, total_length, count_circles, count_sliders,
-                count_spinners, difficulty_rating, is_scorable, pass_count,
-                play_count, version, created_by, ranked_status, status, created_at,
-                updated_at, deleted_at
+                count_spinners, difficulty_rating, is_scoreable, pass_count,
+                play_count, version, created_by, ranked_status, status, deleted_at
             ) VALUES (
                 :beatmap_id, :md5_hash, :set_id, :mode, :convert, :od, :ar,
                 :cs, :hp, :bpm, :hit_length, :total_length, :count_circles,
                 :count_sliders, :count_spinners, :difficulty_rating,
-                :is_scorable, :pass_count, :play_count, :version, :created_by,
-                :ranked_status, :status, :created_at, :updated_at, :deleted_at
+                :is_scoreable, :pass_count, :play_count, :version, :created_by,
+                :ranked_status, :status, :deleted_at
             )
         """
         params = {
@@ -61,15 +59,13 @@ class BeatmapsRepo:
             "count_sliders": count_sliders,
             "count_spinners": count_spinners,
             "difficulty_rating": difficulty_rating,
-            "is_scorable": is_scorable,
+            "is_scoreable": is_scoreable,
             "pass_count": pass_count,
             "play_count": play_count,
             "version": version,
             "created_by": created_by,
             "ranked_status": ranked_status,
             "status": status,
-            "created_at": created_at,
-            "updated_at": updated_at,
             "deleted_at": deleted_at,
         }
         await self.ctx.db.execute(query, params)

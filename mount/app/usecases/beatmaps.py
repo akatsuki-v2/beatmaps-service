@@ -6,17 +6,15 @@ from app.common.context import Context
 from app.common.errors import ServiceError
 from app.models import Status
 from app.repositories.beatmaps import BeatmapsRepo
-from app.repositories.beatmaps import RankedStatus
 
 
 async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
                  convert: bool, mode: int, od: float, ar: float, cs: float,
                  hp: float, bpm: float, hit_length: int, total_length: int,
                  count_circles: int, count_sliders: int, count_spinners: int,
-                 difficulty_rating: float, is_scorable: bool, pass_count: int,
+                 difficulty_rating: float, is_scoreable: bool, pass_count: int,
                  play_count: int, version: str, created_by: str,
-                 ranked_status: int, status: int, created_at: str,
-                 updated_at: str, deleted_at: str
+                 ranked_status: int, status: int, deleted_at: str
                  ) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsRepo(ctx)
 
@@ -28,11 +26,10 @@ async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
                                 count_sliders=count_sliders,
                                 count_spinners=count_spinners,
                                 difficulty_rating=difficulty_rating,
-                                is_scorable=is_scorable, pass_count=pass_count,
+                                is_scoreable=is_scoreable, pass_count=pass_count,
                                 play_count=play_count, version=version,
                                 created_by=created_by,
                                 ranked_status=ranked_status, status=status,
-                                created_at=created_at, updated_at=updated_at,
                                 deleted_at=deleted_at)
     if beatmap is None:
         return ServiceError.BEATMAPS_CANNOT_CREATE
