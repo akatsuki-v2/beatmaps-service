@@ -1,18 +1,9 @@
 from datetime import datetime
-from enum import IntEnum
 from typing import Literal
 
 from app.models import BaseModel
-
-
-class RankedStatus(IntEnum):
-    GRAVEYARD = -2
-    WORK_IN_PROGRESS = -1
-    PENDING = 0
-    RANKED = 1
-    APPROVED = 2
-    QUALIFIED = 3
-    LOVED = 4
+from app.models import RankedStatus
+from app.models import Status
 
 
 class BeatmapInput(BaseModel):
@@ -37,8 +28,8 @@ class BeatmapInput(BaseModel):
     play_count: int
     version: str
     created_by: int
-    ranked_status: int
-    status: str
+    ranked_status: RankedStatus
+    status: Status
 
 
 class Beatmap(BaseModel):
@@ -63,8 +54,8 @@ class Beatmap(BaseModel):
     play_count: int
     version: str
     created_by: int
-    ranked_status: int
-    status: str
+    ranked_status: RankedStatus
+    status: Status
     created_at: datetime
     updated_at: datetime
 

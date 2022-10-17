@@ -5,13 +5,15 @@ from typing import Any
 from typing import Mapping
 from typing import Type
 
+from aiomysql.cursors import DeserializationCursor
 from databases import Database
 from databases.core import Connection
 from databases.core import Transaction
 
 
 def _create_pool(dsn: str, min_pool_size: int, max_pool_size: int, ssl: bool) -> Database:
-    return Database(url=dsn, min_size=min_pool_size, max_size=max_pool_size, ssl=ssl)
+    return Database(url=dsn, min_size=min_pool_size, max_size=max_pool_size, ssl=ssl,
+                    cursorclass=DeserializationCursor)
 
 
 def dsn(

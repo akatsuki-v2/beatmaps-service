@@ -1,4 +1,3 @@
-from enum import IntEnum
 from typing import Any
 from typing import Mapping
 
@@ -144,7 +143,9 @@ class BeatmapsRepo:
 
     async def delete(self, beatmap_id: int) -> Mapping[str, Any] | None:
         query = """\
-            DELETE FROM beatmaps
+            UPDATE beatmaps
+               SET status = 'deleted',
+                   updated_at = NOW()
              WHERE beatmap_id = :beatmap_id
         """
         params = {"beatmap_id": beatmap_id}
