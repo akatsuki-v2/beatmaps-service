@@ -7,6 +7,7 @@ from app.common import settings
 from app.common.context import Context
 from app.common.errors import ServiceError
 from app.models import Status
+from app.repositories.beatmaps import BeatmapsRepo
 from app.repositories.beatmapsets import BeatmapsetsRepo
 from app.services.osu_api import OsuAPIRequestError
 
@@ -57,11 +58,24 @@ async def create(ctx: Context, beatmapset_id: int, artist: str, artist_unicode: 
     return beatmapset
 
 
+def is_expired(beatmapset: Mapping[str, Any]) -> bool:
+    last_update: datetime = beatmapset["updated_at"]
+
+    return (datetime.now() - last_update).total_seconds() >= 60 * 60 * 24
+
+
 async def fetch_one(ctx: Context, beatmapset_id: int) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsetsRepo(ctx)
 
     beatmapset = await repo.fetch_one(beatmapset_id)
     if beatmapset is None:
+        expired = False
+    else:
+        expired = is_expired(beatmapset)
+        if expired:
+            await repo.delete(beatmapset_id)
+
+    if beatmapset is None or expired:
         # fetch from osu! api
         try:
             osu_beatmapset = await ctx.osu_api_client.get_beatmapset(beatmapset_id)

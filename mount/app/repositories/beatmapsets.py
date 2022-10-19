@@ -173,10 +173,8 @@ class BeatmapsetsRepo:
 
     async def delete(self, beatmapset_id: int) -> Mapping[str, Any] | None:
         query = """\
-            UPDATE beatmapsets
-               SET status = 'deleted',
-                   updated_at = NOW()
-             WHERE beatmapset_id = :beatmapset_id
+            DELETE FROM beatmapsets
+                  WHERE beatmapset_id = :beatmapset_id
         """
         params = {"beatmapset_id": beatmapset_id}
         await self.ctx.db.execute(query, params)

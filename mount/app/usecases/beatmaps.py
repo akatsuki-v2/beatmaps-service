@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any
 from typing import Mapping
 
@@ -38,12 +39,25 @@ async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
     return beatmap
 
 
+def is_expired(beatmap: Mapping[str, Any]) -> bool:
+    last_update: datetime = beatmap["updated_at"]
+
+    return (datetime.now() - last_update).total_seconds() >= 60 * 60 * 24
+
+
 async def fetch_one(ctx: Context, beatmap_id: int
                     ) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsRepo(ctx)
 
     beatmap = await repo.fetch_one(beatmap_id=beatmap_id)
     if beatmap is None:
+        expired = False
+    else:
+        expired = is_expired(beatmap)
+        if expired:
+            await repo.delete(beatmap_id)
+
+    if beatmap is None or expired:
         # try to get it from the osu! api
         try:
             osu_beatmap = await ctx.osu_api_client.get_beatmap(beatmap_id)
