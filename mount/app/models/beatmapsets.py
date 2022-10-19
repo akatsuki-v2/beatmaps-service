@@ -36,7 +36,7 @@ class BeatmapsetInput(BaseModel):
     storyboard: bool
     osu_submitted_at: datetime
     osu_updated_at: datetime
-    osu_ranked_at: datetime
+    osu_ranked_at: datetime | None
     tags: str
 
 
@@ -68,7 +68,7 @@ class Beatmapset(BaseModel):
     current_nominations: int
     required_nominations: int
     ranked_status: RankedStatus
-    osu_ranked_at: datetime
+    osu_ranked_at: datetime | None
     storyboard: bool
     osu_submitted_at: datetime
     tags: str

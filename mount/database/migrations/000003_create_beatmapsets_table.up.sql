@@ -29,7 +29,7 @@ CREATE TABLE beatmapsets (
     tags VARCHAR(256) NOT NULL,
     osu_submitted_at DATETIME NOT NULL,
     osu_updated_at DATETIME NOT NULL,
-    osu_ranked_at DATETIME NOT NULL,
+    osu_ranked_at DATETIME NULL,
     status VARCHAR(16) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT NOW(),
     updated_at DATETIME NOT NULL DEFAULT NOW()

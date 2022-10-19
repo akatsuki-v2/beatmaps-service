@@ -125,7 +125,7 @@ async def fetch_one(ctx: Context, beatmapset_id: int) -> Mapping[str, Any] | Ser
                                        osu_updated_at=osu_beatmapset['last_updated'].removesuffix(
                                            'Z'),
                                        osu_ranked_at=osu_beatmapset['ranked_date'].removesuffix(
-                                           'Z'),
+                                           'Z') if osu_beatmapset['ranked_date'] is not None else None,
                                        status=Status.ACTIVE)
 
         if beatmapset is None:
