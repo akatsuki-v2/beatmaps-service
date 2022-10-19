@@ -16,7 +16,7 @@ async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
                  hp: float, bpm: float, hit_length: int, total_length: int,
                  count_circles: int, count_sliders: int, count_spinners: int,
                  difficulty_rating: float, is_scoreable: bool, pass_count: int,
-                 play_count: int, version: str, created_by: int,
+                 play_count: int, version: str, mapper_id: int,
                  ranked_status: int, status: str,
                  ) -> Mapping[str, Any] | ServiceError:
     repo = BeatmapsRepo(ctx)
@@ -31,7 +31,7 @@ async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
                                 difficulty_rating=difficulty_rating,
                                 is_scoreable=is_scoreable, pass_count=pass_count,
                                 play_count=play_count, version=version,
-                                created_by=created_by,
+                                mapper_id=mapper_id,
                                 ranked_status=ranked_status, status=status)
     if beatmap is None:
         return ServiceError.BEATMAPS_CANNOT_CREATE
@@ -66,6 +66,7 @@ async def fetch_one(ctx: Context, beatmap_id: int
                           response_code=exc.status_code, message=exc.message)
             return ServiceError.BEATMAPS_NOT_FOUND
 
+        print('osu beatmap', osu_beatmap)
         beatmap = await repo.create(beatmap_id=osu_beatmap["id"],
                                     md5_hash=osu_beatmap["checksum"],
                                     set_id=osu_beatmap["beatmapset_id"],
@@ -86,7 +87,7 @@ async def fetch_one(ctx: Context, beatmap_id: int
                                     pass_count=osu_beatmap["passcount"],
                                     play_count=osu_beatmap["playcount"],
                                     version=osu_beatmap["version"],
-                                    created_by=osu_beatmap["user_id"],
+                                    mapper_id=osu_beatmap["user_id"],
                                     ranked_status=osu_beatmap["ranked"],
                                     status=Status.ACTIVE)
         if beatmap is None:

@@ -19,7 +19,8 @@ class BeatmapsetInput(BaseModel):
     source: str
     title: str
     title_unicode: str
-    created_by: int  # account id
+    mapper_id: int  # account id
+    mapper_name: str
     video: bool
     download_disabled: bool
     availability_information: str | None
@@ -53,7 +54,8 @@ class Beatmapset(BaseModel):
     source: str
     title: str
     title_unicode: str
-    created_by: int  # account id
+    mapper_id: int  # account id
+    mapper_name: str
     video: bool
     download_disabled: bool
     availability_information: str | None

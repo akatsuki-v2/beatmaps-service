@@ -14,7 +14,7 @@ class BeatmapsRepo:
         beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp, bpm,
         hit_length, total_length, count_circles, count_sliders, count_spinners,
         difficulty_rating, is_scoreable, pass_count, play_count,
-        version, created_by, ranked_status, status, created_at, updated_at
+        version, mapper_id, ranked_status, status, created_at, updated_at
     """
 
     def __init__(self, ctx: Context) -> None:
@@ -25,7 +25,7 @@ class BeatmapsRepo:
                      hp: float, bpm: float, hit_length: int, total_length: int,
                      count_circles: int, count_sliders: int, count_spinners: int,
                      difficulty_rating: float, is_scoreable: bool, pass_count: int,
-                     play_count: int, version: str, created_by: int,
+                     play_count: int, version: str, mapper_id: int,
                      ranked_status: int, status: str,
                      ) -> Mapping[str, Any] | None:
         query = """\
@@ -33,12 +33,12 @@ class BeatmapsRepo:
                 beatmap_id, md5_hash, set_id, mode, `convert`, od, ar, cs, hp,
                 bpm, hit_length, total_length, count_circles, count_sliders,
                 count_spinners, difficulty_rating, is_scoreable, pass_count,
-                play_count, version, created_by, ranked_status, status
+                play_count, version, mapper_id, ranked_status, status
             ) VALUES (
                 :beatmap_id, :md5_hash, :set_id, :mode, :convert, :od, :ar,
                 :cs, :hp, :bpm, :hit_length, :total_length, :count_circles,
                 :count_sliders, :count_spinners, :difficulty_rating,
-                :is_scoreable, :pass_count, :play_count, :version, :created_by,
+                :is_scoreable, :pass_count, :play_count, :version, :mapper_id,
                 :ranked_status, :status
             )
         """
@@ -63,7 +63,7 @@ class BeatmapsRepo:
             "pass_count": pass_count,
             "play_count": play_count,
             "version": version,
-            "created_by": created_by,
+            "mapper_id": mapper_id,
             "ranked_status": ranked_status,
             "status": status,
         }

@@ -19,7 +19,7 @@ CREATE TABLE beatmaps (
     pass_count INT NOT NULL,
     play_count INT NOT NULL,
     version VARCHAR(255),
-    created_by INT NOT NULL,
+    mapper_id INT NOT NULL,
     ranked_status INT NOT NULL,
     status VARCHAR(16) NOT NULL,
     created_at DATETIME NOT NULL DEFAULT NOW(),

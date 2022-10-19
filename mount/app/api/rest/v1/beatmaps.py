@@ -36,7 +36,7 @@ async def create(args: BeatmapInput, ctx: RequestContext = Depends()):
                                  pass_count=args.pass_count,
                                  play_count=args.play_count,
                                  version=args.version,
-                                 created_by=args.created_by,
+                                 mapper_id=args.mapper_id,
                                  ranked_status=args.ranked_status,
                                  status=args.status)
     if isinstance(data, ServiceError):
