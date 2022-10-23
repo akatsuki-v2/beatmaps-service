@@ -2,13 +2,13 @@ from datetime import datetime
 from typing import Any
 from typing import Mapping
 
-from app.common import logging
 from app.common import settings
 from app.common.context import Context
 from app.common.errors import ServiceError
 from app.models import Status
 from app.repositories.beatmaps import BeatmapsRepo
 from app.services.osu_api import OsuAPIRequestError
+from shared_modules import logger
 
 
 async def create(ctx: Context, beatmap_id: int, md5_hash: str, set_id: int,
@@ -62,8 +62,8 @@ async def fetch_one(ctx: Context, beatmap_id: int
         try:
             osu_beatmap = await ctx.osu_api_client.get_beatmap(beatmap_id)
         except OsuAPIRequestError as exc:
-            logging.error("Failed to fetch beatmap from osu! api: ",
-                          response_code=exc.status_code, message=exc.message)
+            logger.error("Failed to fetch beatmap from osu! api: ",
+                         response_code=exc.status_code, message=exc.message)
             return ServiceError.BEATMAPS_NOT_FOUND
 
         print('osu beatmap', osu_beatmap)

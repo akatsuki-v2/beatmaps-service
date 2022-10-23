@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Any
 from typing import Mapping
 
-from app.common import logging
 from app.common import settings
 from app.common.context import Context
 from app.common.errors import ServiceError
@@ -10,6 +9,7 @@ from app.models import Status
 from app.repositories.beatmaps import BeatmapsRepo
 from app.repositories.beatmapsets import BeatmapsetsRepo
 from app.services.osu_api import OsuAPIRequestError
+from shared_modules import logger
 
 
 async def create(ctx: Context, beatmapset_id: int, artist: str, artist_unicode: str,
@@ -81,8 +81,8 @@ async def fetch_one(ctx: Context, beatmapset_id: int) -> Mapping[str, Any] | Ser
         try:
             osu_beatmapset = await ctx.osu_api_client.get_beatmapset(beatmapset_id)
         except OsuAPIRequestError as exc:
-            logging.error("Failed to fetch beatmapset from osu! api: ",
-                          response_code=exc.status_code, message=exc.message)
+            logger.error("Failed to fetch beatmapset from osu! api: ",
+                         response_code=exc.status_code, message=exc.message)
             return ServiceError.BEATMAPSETS_NOT_FOUND
 
         if osu_beatmapset["can_be_hyped"]:
@@ -168,8 +168,8 @@ async def fetch_one(ctx: Context, beatmapset_id: int) -> Mapping[str, Any] | Ser
                                             ranked_status=osu_beatmap["ranked"],
                                             status=Status.ACTIVE)
             if beatmap is None:
-                logging.error("Failed to save beatmap from osu! api",
-                              beatmap_id=osu_beatmap["id"])
+                logger.error("Failed to save beatmap from osu! api",
+                             beatmap_id=osu_beatmap["id"])
 
                 # TODO: technically we should probably return error here, but saving
                 # beatmaps feels like a side effect more so than a part of the req?
